@@ -1,5 +1,6 @@
 /* ============================================
    THIỆP CƯỚI MẪU 4 - RED & GOLD TRADITIONAL
+   Full Design with Floral Patterns, Animations
    ============================================ */
 
 /* ===== CSS VARIABLES ===== */
@@ -21,18 +22,9 @@
     --font-dancing: 'Dancing Script', cursive;
 }
 
-/* ===== RESET & BASE ===== */
-*, *::before, *::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-}
-
+/* ===== RESET ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
 body {
     font-family: var(--font-body);
     background: #0a0a0a;
@@ -41,7 +33,9 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* ===== INVITATION WRAPPER ===== */
+.script-font { font-family: var(--font-script); }
+
+/* ===== WRAPPER ===== */
 .invitation-wrapper {
     max-width: 430px;
     margin: 0 auto;
@@ -50,27 +44,30 @@ body {
     overflow-x: hidden;
 }
 
-.invitation-container {
-    position: relative;
-}
-
-/* ===== PARTICLES ===== */
+/* ===== PARTICLES / SNOW ===== */
 .particles {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     pointer-events: none;
     z-index: 10;
 }
 
 .particle {
     position: absolute;
-    background: var(--gold);
     border-radius: 50%;
     opacity: 0;
+    pointer-events: none;
+}
+
+.particle.gold {
+    background: var(--gold);
     animation: sparkle 3s ease-in-out infinite;
+}
+
+.particle.snow {
+    background: rgba(255, 255, 255, 0.8);
+    animation: snowFall linear infinite;
 }
 
 @keyframes sparkle {
@@ -79,13 +76,19 @@ body {
     100% { opacity: 0; transform: translateY(-60px) scale(0); }
 }
 
-/* ===== FLOATING HEARTS ===== */
+@keyframes snowFall {
+    0% { opacity: 1; transform: translateY(-10px) translateX(0) rotate(0deg); }
+    25% { transform: translateY(25vh) translateX(15px) rotate(90deg); }
+    50% { transform: translateY(50vh) translateX(-10px) rotate(180deg); opacity: 0.8; }
+    75% { transform: translateY(75vh) translateX(20px) rotate(270deg); }
+    100% { opacity: 0; transform: translateY(105vh) translateX(-5px) rotate(360deg); }
+}
+
+/* Floating Hearts */
 .floating-hearts {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
     pointer-events: none;
     z-index: 100;
 }
@@ -101,6 +104,20 @@ body {
     100% { opacity: 0; transform: translateY(-400px) scale(0.5) rotate(-15deg); }
 }
 
+/* Confetti */
+.confetti {
+    position: fixed;
+    top: -10px;
+    z-index: 9;
+    pointer-events: none;
+    animation: confettiFall 4s linear forwards;
+}
+
+@keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
 /* ===== SECTION BASE ===== */
 .section {
     position: relative;
@@ -111,19 +128,189 @@ body {
     transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.section.visible {
-    opacity: 1;
-    transform: translateY(0);
+.section.visible { opacity: 1; transform: translateY(0); }
+.section-content { padding: 40px 20px; position: relative; z-index: 2; }
+
+/* =============================================
+   REAL IMAGE-BASED DECORATIONS
+   ============================================= */
+
+/* Floral background image overlay */
+.floral-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.35;
+    mix-blend-mode: screen;
 }
 
-.section-content {
-    padding: 40px 20px;
+.floral-bg-hero {
+    opacity: 0.3;
+}
+
+.floral-bg-section {
+    opacity: 0.2;
+}
+
+/* Snow GIF overlay */
+.snow-gif-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 4;
+    opacity: 0.6;
+    mix-blend-mode: screen;
+}
+
+/* Wave divider between sections */
+.wave-divider {
     position: relative;
-    z-index: 2;
+    margin-top: -5px;
+    z-index: 10;
+    line-height: 0;
 }
 
-.script-font {
-    font-family: var(--font-script);
+.wave-divider svg {
+    width: 100%;
+    height: 50px;
+    display: block;
+}
+
+/* Hero Xi (囍) icon */
+.hero-xi-icon {
+    width: 60px;
+    height: auto;
+    display: block;
+    margin: 0 auto 5px;
+    opacity: 0.9;
+    filter: drop-shadow(0 2px 8px rgba(212, 168, 83, 0.5));
+    animation: xiFloat 3s ease-in-out infinite;
+}
+
+@keyframes xiFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-5px) scale(1.05); }
+}
+
+/* Chibi GIF in events */
+.chibi-gif {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+/* Chuhy image in portraits */
+.chuhy-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Floral side images for dearest section */
+.floral-side-img {
+    position: absolute;
+    top: 0;
+    width: 100px;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+}
+
+.floral-side-left { left: 0; }
+.floral-side-right { right: 0; transform: scaleX(-1); }
+
+/* =============================================
+   TEXT ANIMATIONS
+   ============================================= */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes goldGlow {
+    0%, 100% { text-shadow: 0 0 10px rgba(212, 168, 83, 0.3); }
+    50% { text-shadow: 0 0 25px rgba(212, 168, 83, 0.6), 0 0 40px rgba(212, 168, 83, 0.2); }
+}
+
+@keyframes textReveal {
+    from { opacity: 0; letter-spacing: 15px; filter: blur(4px); }
+    to { opacity: 1; letter-spacing: inherit; filter: blur(0); }
+}
+
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.section.visible .couple-names-top {
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.section.visible .wedding-date-hero {
+    animation: textReveal 1s ease-out 0.6s both;
+}
+
+.section.visible .love-quote-hero {
+    animation: fadeInUp 0.8s ease-out 0.8s both;
+}
+
+.section.visible .ceremony-title {
+    animation: goldGlow 3s ease-in-out infinite, fadeInUp 0.8s ease-out both;
+}
+
+.section.visible .save-the-date-title {
+    animation: goldGlow 3s ease-in-out infinite, fadeInUp 0.8s ease-out 0.3s both;
+}
+
+.section.visible .announce-title {
+    animation: textReveal 1.2s ease-out 0.5s both;
+}
+
+.section.visible .groom-name-announce,
+.section.visible .bride-name-announce {
+    animation: fadeInScale 0.8s ease-out both;
+}
+
+.section.visible .groom-name-announce { animation-delay: 0.7s; }
+.section.visible .bride-name-announce { animation-delay: 1.1s; }
+.section.visible .and-text { animation: fadeInScale 0.6s ease-out 0.9s both; }
+
+.section.visible .gallery-quote-top,
+.section.visible .gallery-quote-bottom,
+.section.visible .love-story-quote {
+    animation: fadeInUp 0.8s ease-out 0.3s both;
+}
+
+.section.visible .dearest-text {
+    animation: goldGlow 3s ease-in-out infinite, fadeInUp 0.8s ease-out 0.5s both;
+}
+
+.section.visible .gift-title {
+    animation: textReveal 1s ease-out 0.3s both;
+}
+
+.section.visible .love-you-forever {
+    animation: goldGlow 3s ease-in-out infinite;
+}
+
+/* Remove old SVG background patterns since we use real images now */
+.family-section::before,
+.gift-section::before,
+.hero-section::after {
+    content: none;
+}
+
+/* Wavy/curved section transitions - REMOVE old clip-path */
+.family-section {
+    margin-top: 0;
+    padding-top: 0;
 }
 
 /* =============================================
@@ -135,85 +322,11 @@ body {
     align-items: center;
     justify-content: center;
     background: radial-gradient(ellipse at center, var(--red-medium) 0%, var(--red-dark) 60%, #3D0810 100%);
+    opacity: 1 !important;
+    transform: none !important;
     position: relative;
-    opacity: 1;
-    transform: none;
 }
 
-/* Gold corner decorations */
-.corner-decor {
-    position: absolute;
-    width: 120px;
-    height: 120px;
-    z-index: 3;
-    opacity: 0.4;
-}
-
-.corner-decor::before,
-.corner-decor::after {
-    content: '';
-    position: absolute;
-    background: var(--gold);
-    opacity: 0.5;
-}
-
-.corner-decor.top-left {
-    top: 10px;
-    left: 10px;
-    border-top: 2px solid var(--gold);
-    border-left: 2px solid var(--gold);
-}
-
-.corner-decor.top-left::before {
-    width: 60px;
-    height: 1px;
-    top: 15px;
-    left: 15px;
-}
-
-.corner-decor.top-left::after {
-    width: 1px;
-    height: 60px;
-    top: 15px;
-    left: 15px;
-}
-
-.corner-decor.top-right {
-    top: 10px;
-    right: 10px;
-    border-top: 2px solid var(--gold);
-    border-right: 2px solid var(--gold);
-}
-
-.corner-decor.top-right::before {
-    width: 60px;
-    height: 1px;
-    top: 15px;
-    right: 15px;
-}
-
-.corner-decor.top-right::after {
-    width: 1px;
-    height: 60px;
-    top: 15px;
-    right: 15px;
-}
-
-.corner-decor.bottom-left {
-    bottom: 10px;
-    left: 10px;
-    border-bottom: 2px solid var(--gold);
-    border-left: 2px solid var(--gold);
-}
-
-.corner-decor.bottom-right {
-    bottom: 10px;
-    right: 10px;
-    border-bottom: 2px solid var(--gold);
-    border-right: 2px solid var(--gold);
-}
-
-/* Hero content */
 .hero-content {
     text-align: center;
     padding: 30px 20px;
@@ -225,46 +338,31 @@ body {
     font-family: var(--font-display);
     font-size: 1.4rem;
     color: var(--gold-light);
-    letter-spacing: 2px;
-    margin-bottom: 25px;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
     text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    font-weight: 500;
 }
 
-/* Arch frame */
+/* Curved text SVG */
+.curved-text-svg {
+    width: 300px;
+    height: 160px;
+    display: block;
+    margin: 0 auto -40px;
+    position: relative;
+    z-index: 6;
+}
+
 .arch-frame {
     position: relative;
     width: 280px;
     margin: 0 auto 20px;
 }
 
-.arch-text {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-bottom: -15px;
-    position: relative;
-    z-index: 5;
-}
-
-.welcome-text {
-    font-family: var(--font-display);
-    font-size: 0.6rem;
-    letter-spacing: 3px;
-    color: var(--gold);
-    text-transform: uppercase;
-}
-
-.xi-char {
-    font-size: 1.8rem;
-    color: var(--gold);
-    text-shadow: 0 0 20px rgba(212, 168, 83, 0.6);
-    font-weight: bold;
-}
-
 .arch-photo {
     width: 280px;
-    height: 340px;
+    height: 350px;
     border-radius: 140px 140px 10px 10px;
     overflow: hidden;
     border: 3px solid var(--white);
@@ -272,11 +370,7 @@ body {
     margin: 0 auto;
 }
 
-.arch-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+.arch-photo img { width: 100%; height: 100%; object-fit: cover; }
 
 .wedding-date-hero {
     font-family: var(--font-display);
@@ -307,12 +401,173 @@ body {
 }
 
 /* =============================================
-   SECTION 2: LỄ KHÁNH VÂN
+   SECTION 2: PORTRAITS
+   ============================================= */
+.portraits-section { background: var(--cream); color: var(--text-dark); }
+
+.date-badge {
+    background: var(--red-main);
+    color: var(--white);
+    padding: 8px 25px;
+    border-radius: 25px;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    letter-spacing: 3px;
+    margin: 0 auto 15px;
+    display: block;
+    width: fit-content;
+}
+
+.love-quote-section {
+    font-family: var(--font-dancing);
+    font-size: 1.2rem;
+    color: var(--red-dark);
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Ornate Xi icon - now uses image */
+.xi-icon-ornate {
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeInScale 0.8s ease-out;
+}
+
+.portrait-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.portrait-card {
+    border: 3px solid var(--red-main);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+}
+
+.portrait-card:hover { transform: scale(1.02); }
+.portrait-card img { width: 100%; height: 280px; object-fit: cover; display: block; }
+
+/* Names under portraits */
+.portrait-names {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 18px;
+}
+
+.portrait-name {
+    font-size: 1.6rem;
+    color: var(--red-dark);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.08);
+}
+
+.wine-icon { font-size: 1.3rem; animation: fadeInScale 0.8s ease-out 0.5s both; }
+
+/* =============================================
+   SECTION 3: LOVE QUOTE + FAMILY
+   ============================================= */
+.family-section {
+    background: radial-gradient(ellipse at center, var(--red-medium) 0%, var(--red-dark) 100%);
+    position: relative;
+}
+
+.love-quote-long {
+    text-align: center;
+    font-family: var(--font-dancing);
+    font-size: 0.95rem;
+    line-height: 2.2;
+    color: rgba(255,255,255,0.92);
+    font-style: italic;
+    margin-bottom: 35px;
+    padding: 0 5px;
+}
+
+.save-the-date-title {
+    text-align: center;
+    font-size: 2.2rem;
+    color: var(--gold-light);
+    margin-bottom: 25px;
+}
+
+.family-info-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.family-side { flex: 1; text-align: center; }
+
+.family-heading {
+    font-size: 1.6rem;
+    color: var(--gold);
+    margin-bottom: 8px;
+}
+
+.parent-label {
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+    color: var(--gold-light);
+    line-height: 1.6;
+}
+
+.parent-label strong { color: var(--white); }
+
+.family-divider-icon {
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 0.8rem;
+    padding-top: 30px;
+}
+
+.announcement-card {
+    text-align: center;
+    padding: 30px 15px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(212, 168, 83, 0.2);
+}
+
+.announce-text {
+    font-size: 1.4rem;
+    color: var(--gold-light);
+    margin-bottom: 5px;
+}
+
+.announce-title {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    color: var(--white);
+    letter-spacing: 5px;
+    margin-bottom: 20px;
+}
+
+.groom-name-announce, .bride-name-announce {
+    font-size: 2.2rem;
+    color: var(--gold-light);
+    margin-bottom: 5px;
+}
+
+.and-text { font-size: 1.3rem; color: var(--gold); margin-bottom: 5px; }
+
+/* =============================================
+   SECTION 4: CEREMONY
    ============================================= */
 .ceremony-section {
     background: linear-gradient(180deg, #3D0810 0%, var(--red-dark) 30%, var(--red-main) 100%);
     padding: 0;
-    position: relative;
 }
 
 .ceremony-title {
@@ -345,7 +600,7 @@ body {
     transform: translateX(-50%);
     font-size: 8rem;
     color: var(--red-light);
-    text-shadow: 
+    text-shadow:
         3px 3px 0 #7a1a2a,
         6px 6px 0 #5a1020,
         0 0 30px rgba(201, 67, 79, 0.5);
@@ -360,12 +615,7 @@ body {
 }
 
 /* Lanterns */
-.lantern {
-    position: absolute;
-    top: 60px;
-    z-index: 3;
-}
-
+.lantern { position: absolute; top: 60px; z-index: 3; }
 .lantern-left { left: 5px; }
 .lantern-right { right: 5px; }
 
@@ -382,11 +632,9 @@ body {
 .lantern-body::before {
     content: '';
     position: absolute;
-    top: -8px;
-    left: 50%;
+    top: -8px; left: 50%;
     transform: translateX(-50%);
-    width: 20px;
-    height: 8px;
+    width: 20px; height: 8px;
     background: var(--gold);
     border-radius: 3px 3px 0 0;
 }
@@ -394,11 +642,9 @@ body {
 .lantern-body::after {
     content: '';
     position: absolute;
-    bottom: -12px;
-    left: 50%;
+    bottom: -12px; left: 50%;
     transform: translateX(-50%);
-    width: 2px;
-    height: 12px;
+    width: 2px; height: 12px;
     background: var(--gold);
 }
 
@@ -407,155 +653,13 @@ body {
     100% { box-shadow: 0 0 35px rgba(255, 0, 0, 0.7), 0 0 60px rgba(255, 0, 0, 0.2); }
 }
 
-/* =============================================
-   SECTION 3: PORTRAITS
-   ============================================= */
-.portraits-section {
-    background: var(--cream);
-    color: var(--text-dark);
-}
+/* Lantern swing */
+.lantern-left { animation: lanternSwing 4s ease-in-out infinite; transform-origin: top center; }
+.lantern-right { animation: lanternSwing 4s ease-in-out infinite 1s; transform-origin: top center; }
 
-.date-badge {
-    background: var(--red-main);
-    color: var(--white);
-    padding: 8px 25px;
-    border-radius: 25px;
-    font-family: var(--font-display);
-    font-size: 1rem;
-    letter-spacing: 3px;
-    margin: 0 auto 15px;
-    display: block;
-    width: fit-content;
-}
-
-.love-quote-section {
-    font-family: var(--font-dancing);
-    font-size: 1.1rem;
-    color: var(--red-dark);
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.xi-icon-small {
-    width: 50px;
-    height: 50px;
-    margin: 0 auto 20px;
-}
-
-.xi-svg {
-    width: 100%;
-    height: 100%;
-}
-
-.portrait-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-.portrait-card {
-    border: 3px solid var(--red-main);
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-    transition: transform 0.3s ease;
-}
-
-.portrait-card:hover {
-    transform: scale(1.02);
-}
-
-.portrait-card img {
-    width: 100%;
-    height: 280px;
-    object-fit: cover;
-    display: block;
-}
-
-/* =============================================
-   SECTION 4: FAMILY INFO
-   ============================================= */
-.family-section {
-    background: radial-gradient(ellipse at center, var(--red-medium) 0%, var(--red-dark) 100%);
-    position: relative;
-}
-
-.family-section::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4a853' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    pointer-events: none;
-}
-
-.family-info-row {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 30px;
-}
-
-.family-side {
-    flex: 1;
-    text-align: center;
-}
-
-.parent-label {
-    font-size: 0.85rem;
-    margin-bottom: 5px;
-    color: var(--gold-light);
-    line-height: 1.6;
-}
-
-.parent-label strong {
-    color: var(--white);
-}
-
-.family-divider-icon {
-    width: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--gold);
-    font-size: 0.8rem;
-    padding-top: 10px;
-}
-
-.announcement-card {
-    text-align: center;
-    padding: 30px 15px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 15px;
-    border: 1px solid rgba(212, 168, 83, 0.2);
-}
-
-.announce-text {
-    font-family: var(--font-display);
-    font-size: 1rem;
-    color: var(--gold-light);
-    margin-bottom: 5px;
-}
-
-.announce-title {
-    font-family: var(--font-display);
-    font-size: 1.6rem;
-    color: var(--white);
-    letter-spacing: 5px;
-    margin-bottom: 20px;
-}
-
-.groom-name-announce,
-.bride-name-announce {
-    font-size: 2.2rem;
-    color: var(--gold-light);
-    margin-bottom: 5px;
-}
-
-.and-text {
-    font-size: 1.3rem;
-    color: var(--gold);
-    margin-bottom: 5px;
+@keyframes lanternSwing {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
 }
 
 /* =============================================
@@ -596,34 +700,16 @@ body {
 }
 
 .event-info { flex: 1; }
-
-.event-info p {
-    margin-bottom: 8px;
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.event-info i {
-    color: var(--gold);
-    width: 16px;
-    text-align: center;
-}
-
+.event-info p { margin-bottom: 8px; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; }
+.event-info i { color: var(--gold); width: 16px; text-align: center; }
 .event-time { color: var(--gold-light); font-weight: 500; }
-
 .lunar { color: var(--gold); font-size: 0.8rem; }
-
-.event-chibi { font-size: 2.5rem; opacity: 0.8; }
+.event-chibi { opacity: 0.9; }
 
 /* =============================================
    SECTION 6: CALENDAR + COUNTDOWN
    ============================================= */
-.calendar-section {
-    background: var(--cream);
-    color: var(--text-dark);
-}
+.calendar-section { background: var(--cream); color: var(--text-dark); }
 
 .calendar-widget {
     position: relative;
@@ -635,11 +721,7 @@ body {
     margin-bottom: 25px;
 }
 
-.calendar-header {
-    text-align: center;
-    padding-bottom: 15px;
-    border-bottom: 2px solid var(--red-main);
-}
+.calendar-header { text-align: center; padding-bottom: 15px; border-bottom: 2px solid var(--red-main); }
 
 .calendar-month {
     font-family: var(--font-display);
@@ -650,31 +732,22 @@ body {
 
 .calendar-watermark {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     font-size: 8rem;
     font-weight: 900;
     color: rgba(139, 26, 43, 0.06);
     font-family: var(--font-display);
     pointer-events: none;
-    z-index: 0;
 }
 
-.calendar-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    position: relative;
-    z-index: 1;
-}
+.calendar-table { width: 100%; border-collapse: collapse; margin-top: 10px; position: relative; z-index: 1; }
 
 .calendar-table th {
     padding: 8px 2px;
     font-size: 0.7rem;
     color: var(--red-dark);
     font-weight: 600;
-    text-transform: uppercase;
 }
 
 .calendar-table td {
@@ -683,7 +756,6 @@ body {
     font-size: 0.85rem;
     color: #555;
     position: relative;
-    cursor: default;
 }
 
 .calendar-table td.today {
@@ -711,18 +783,12 @@ body {
 .calendar-table td.wedding-day::after {
     content: '❤️';
     position: absolute;
-    bottom: -2px;
-    left: 50%;
+    bottom: -2px; left: 50%;
     transform: translateX(-50%);
     font-size: 0.6rem;
 }
 
-/* Countdown */
-.countdown-timer {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
+.countdown-timer { display: flex; justify-content: center; gap: 10px; }
 
 .countdown-item {
     background: var(--red-main);
@@ -742,21 +808,12 @@ body {
     line-height: 1;
 }
 
-.countdown-label {
-    display: block;
-    font-size: 0.7rem;
-    margin-top: 4px;
-    opacity: 0.8;
-    text-transform: lowercase;
-}
+.countdown-label { display: block; font-size: 0.7rem; margin-top: 4px; opacity: 0.8; }
 
 /* =============================================
    SECTION 7: RSVP
    ============================================= */
-.rsvp-section {
-    background: linear-gradient(180deg, var(--cream) 0%, #f5e6d3 100%);
-    color: var(--text-dark);
-}
+.rsvp-section { background: linear-gradient(180deg, var(--cream) 0%, #f5e6d3 100%); color: var(--text-dark); }
 
 .rsvp-card {
     background: var(--white);
@@ -774,9 +831,7 @@ body {
     font-weight: 700;
 }
 
-.form-group {
-    margin-bottom: 18px;
-}
+.form-group { margin-bottom: 18px; }
 
 .form-group label:first-child {
     display: block;
@@ -798,17 +853,9 @@ body {
     background: #fefefe;
 }
 
-.form-group input[type="text"]:focus,
-.form-group select:focus {
-    outline: none;
-    border-color: var(--red-main);
-}
+.form-group input:focus, .form-group select:focus { outline: none; border-color: var(--red-main); }
 
-.radio-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
+.radio-group { display: flex; flex-direction: column; gap: 8px; }
 
 .radio-option {
     display: flex;
@@ -821,15 +868,8 @@ body {
     transition: background 0.3s;
 }
 
-.radio-option:hover {
-    background: rgba(139, 26, 43, 0.05);
-}
-
-.radio-option input[type="radio"] {
-    accent-color: var(--red-main);
-    width: 16px;
-    height: 16px;
-}
+.radio-option:hover { background: rgba(139, 26, 43, 0.05); }
+.radio-option input[type="radio"] { accent-color: var(--red-main); width: 16px; height: 16px; }
 
 .rsvp-submit-btn {
     width: 100%;
@@ -849,16 +889,31 @@ body {
     gap: 8px;
 }
 
-.rsvp-submit-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(139, 26, 43, 0.4);
-}
+.rsvp-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(139, 26, 43, 0.4); }
 
 /* =============================================
    SECTION 8: GALLERY
    ============================================= */
 .gallery-section {
     background: radial-gradient(ellipse at center, var(--red-medium) 0%, var(--red-dark) 100%);
+    position: relative;
+}
+
+.gallery-quote-top, .gallery-quote-bottom {
+    text-align: center;
+    font-size: 0.95rem;
+    font-style: italic;
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 25px;
+    line-height: 1.8;
+    font-family: var(--font-dancing);
+}
+
+.gallery-quote-bottom {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-family: var(--font-dancing);
+    font-size: 1.05rem;
 }
 
 .gallery-grid {
@@ -877,54 +932,62 @@ body {
 }
 
 .gallery-item:hover { transform: scale(1.02); }
-
-.gallery-item.small img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
-}
-
-.gallery-item.large {
-    grid-column: 1 / -1;
-}
-
-.gallery-item.large img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    display: block;
-}
+.gallery-item.small img { width: 100%; height: 200px; object-fit: cover; display: block; }
+.gallery-item.large { grid-column: 1 / -1; }
+.gallery-item.large img { width: 100%; height: 280px; object-fit: cover; display: block; }
 
 .love-story-quote {
     text-align: center;
-    padding: 20px 10px;
-    font-family: var(--font-body);
-    font-size: 0.85rem;
-    line-height: 1.8;
-    color: rgba(255,255,255,0.85);
+    padding: 20px 5px;
+    font-size: 0.9rem;
+    line-height: 2;
+    color: rgba(255,255,255,0.9);
     font-style: italic;
+    font-family: var(--font-dancing);
 }
+
+/* Dearest love section */
+.dearest-love-section {
+    background: var(--cream);
+    padding: 30px 25px;
+    position: relative;
+    overflow: hidden;
+}
+
+.dearest-photo {
+    width: 80%;
+    margin: 0 auto 15px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    position: relative;
+    z-index: 2;
+}
+
+.dearest-photo img { width: 100%; height: 300px; object-fit: cover; display: block; }
+
+.dearest-text {
+    text-align: center;
+    font-size: 1.4rem;
+    color: var(--gold-dark);
+    position: relative;
+    z-index: 2;
+}
+
+.gallery-item-full {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+.gallery-item-full img { width: 100%; height: 350px; object-fit: cover; display: block; }
 
 /* =============================================
    SECTION 9: GIFT
    ============================================= */
 .gift-section {
     background: radial-gradient(ellipse at bottom, var(--red-main) 0%, var(--red-dark) 100%);
-}
-
-.gift-photo-full {
-    width: calc(100% + 40px);
-    margin: -40px -20px 25px;
-    height: 350px;
-    overflow: hidden;
-    border-bottom: 3px solid var(--white);
-}
-
-.gift-photo-full img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    position: relative;
 }
 
 .gift-title {
@@ -933,65 +996,124 @@ body {
     font-size: 1.1rem;
     letter-spacing: 3px;
     color: var(--white);
-    margin-bottom: 20px;
-}
-
-/* Envelope icon */
-.gift-envelope-icon {
-    display: flex;
-    justify-content: center;
     margin-bottom: 25px;
+    font-style: italic;
 }
 
-.envelope {
+/* Clickable Envelope */
+.gift-envelope-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.gift-envelope-wrapper:hover { transform: scale(1.05); }
+
+.envelope-container {
+    width: 100px;
+    height: 80px;
     position: relative;
-    width: 80px;
+    animation: envelopeBounce 2s ease-in-out infinite;
+}
+
+@keyframes envelopeBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+.envelope-bottom {
+    width: 100px;
     height: 60px;
-}
-
-.envelope-body {
-    width: 80px;
-    height: 50px;
-    background: var(--white);
-    border-radius: 0 0 8px 8px;
-    position: relative;
-}
-
-.envelope-flap {
+    background: linear-gradient(135deg, #fff5f5, var(--white));
+    border-radius: 0 0 10px 10px;
     position: absolute;
-    top: -20px;
-    left: 0;
-    width: 0;
-    height: 0;
-    border-left: 40px solid transparent;
-    border-right: 40px solid transparent;
-    border-bottom: 20px solid var(--white);
+    bottom: 0;
+    border: 2px solid #e8a0a0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.heart-in-envelope {
+.envelope-top {
+    width: 100px;
+    height: 40px;
     position: absolute;
-    top: -15px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 0;
+    z-index: 2;
+    background: linear-gradient(180deg, transparent 0%, transparent 40%, #fff5f5 40%);
+}
+
+.envelope-top::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 0; height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-top: 35px solid #ff6b6b;
+}
+
+.envelope-top::after {
+    content: '';
+    position: absolute;
+    top: 3px; left: 3px;
+    width: 0; height: 0;
+    border-left: 47px solid transparent;
+    border-right: 47px solid transparent;
+    border-top: 32px solid #ff8a8a;
+}
+
+.envelope-heart {
     text-align: center;
     color: var(--red-main);
-    animation: heartPeek 2s ease-in-out infinite;
+    position: relative;
+    z-index: 3;
+    animation: heartFloat 1.5s ease-in-out infinite;
 }
 
-.heart-in-envelope i { font-size: 1.4rem; display: block; }
+.envelope-heart i { font-size: 1.6rem; display: block; }
 
-.heart-in-envelope span {
+.love-label {
     font-family: var(--font-script);
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     color: var(--red-main);
+    display: block;
+    margin-top: -3px;
 }
 
-@keyframes heartPeek {
-    0%, 100% { transform: translateX(-50%) translateY(0); }
-    50% { transform: translateX(-50%) translateY(-8px); }
+@keyframes heartFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
 }
 
-/* Bank tabs & cards */
+.tap-hint {
+    font-size: 0.75rem;
+    color: var(--gold-light);
+    opacity: 0.7;
+    margin-top: 8px;
+    animation: hintPulse 2s ease-in-out infinite;
+}
+
+@keyframes hintPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Bank section (hidden by default) */
+.bank-section {
+    animation: slideDown 0.5s ease-out;
+}
+
+.bank-section.hidden { display: none; }
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .bank-info-tabs {
     display: flex;
     justify-content: center;
@@ -1014,10 +1136,7 @@ body {
     gap: 6px;
 }
 
-.tab-btn.active {
-    background: var(--gold);
-    color: var(--red-dark);
-}
+.tab-btn.active { background: var(--gold); color: var(--red-dark); }
 
 .bank-card {
     background: rgba(255,255,255,0.1);
@@ -1028,36 +1147,12 @@ body {
     backdrop-filter: blur(10px);
 }
 
-.bank-card.hidden { display: none; }
-
 .qr-code { margin-bottom: 15px; }
+.qr-code img { width: 160px; height: 160px; border-radius: 10px; border: 3px solid var(--white); }
 
-.qr-code img {
-    width: 160px;
-    height: 160px;
-    border-radius: 10px;
-    border: 3px solid var(--white);
-}
-
-.bank-name {
-    font-weight: 700;
-    font-size: 1rem;
-    color: var(--gold);
-    margin-bottom: 5px;
-}
-
-.account-number {
-    font-size: 1.1rem;
-    letter-spacing: 2px;
-    font-weight: 600;
-    margin-bottom: 3px;
-}
-
-.account-holder {
-    font-size: 0.85rem;
-    color: var(--gold-light);
-    margin-bottom: 10px;
-}
+.bank-name { font-weight: 700; font-size: 1rem; color: var(--gold); margin-bottom: 5px; }
+.account-number { font-size: 1.1rem; letter-spacing: 2px; font-weight: 600; margin-bottom: 3px; }
+.account-holder { font-size: 0.85rem; color: var(--gold-light); margin-bottom: 10px; }
 
 .copy-btn {
     padding: 8px 20px;
@@ -1074,41 +1169,46 @@ body {
     gap: 5px;
 }
 
-.copy-btn:hover {
-    background: var(--gold);
-    color: var(--red-dark);
-}
+.copy-btn:hover { background: var(--gold); color: var(--red-dark); }
 
-/* Gift couple arch photos */
+/* Gift couple photos */
 .gift-couple-photos {
     display: flex;
     justify-content: center;
     gap: 15px;
     margin: 25px 0 15px;
+    align-items: flex-end;
 }
 
-.arch-photo-small {
-    width: 120px;
-    height: 160px;
-    border-radius: 60px 60px 10px 10px;
+.arch-photo-large {
+    width: 180px;
+    height: 240px;
+    border-radius: 90px 90px 10px 10px;
     overflow: hidden;
     border: 3px solid var(--white);
     box-shadow: 0 5px 20px rgba(0,0,0,0.3);
 }
 
-.arch-photo-small img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.arch-photo-large img { width: 100%; height: 100%; object-fit: cover; }
+
+.arch-photo-small {
+    width: 120px;
+    height: 160px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 3px solid var(--white);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
 }
+
+.arch-photo-small img { width: 100%; height: 100%; object-fit: cover; }
 
 .love-you-forever {
     text-align: center;
     font-family: var(--font-display);
     font-size: 1rem;
     letter-spacing: 5px;
-    color: var(--gold);
-    opacity: 0.8;
+    color: var(--white);
+    margin-top: 15px;
 }
 
 /* =============================================
@@ -1127,16 +1227,9 @@ body {
     margin-bottom: 10px;
 }
 
-.thankyou-message p {
-    font-size: 0.9rem;
-    color: rgba(255,255,255,0.8);
-    margin-bottom: 20px;
-}
+.thankyou-message p { font-size: 0.9rem; color: rgba(255,255,255,0.8); margin-bottom: 20px; }
 
-.signature {
-    font-size: 1.8rem;
-    color: var(--gold);
-}
+.signature { font-size: 1.8rem; color: var(--gold); }
 
 .footer-hearts {
     margin: 20px 0 15px;
@@ -1147,21 +1240,14 @@ body {
     font-size: 0.8rem;
 }
 
-.footer-hearts i:nth-child(2) {
-    font-size: 1rem;
-    animation: heartBeat 1.5s ease-in-out infinite;
-}
+.footer-hearts i:nth-child(2) { font-size: 1rem; animation: heartBeat 1.5s ease-in-out infinite; }
 
 @keyframes heartBeat {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.3); }
 }
 
-.made-with {
-    font-size: 0.7rem;
-    color: rgba(255,255,255,0.4);
-}
-
+.made-with { font-size: 0.7rem; color: rgba(255,255,255,0.4); }
 .made-with i { color: var(--red-light); }
 
 /* =============================================
@@ -1169,11 +1255,9 @@ body {
    ============================================= */
 .bottom-bar {
     position: fixed;
-    bottom: 0;
-    left: 50%;
+    bottom: 0; left: 50%;
     transform: translateX(-50%);
-    width: 100%;
-    max-width: 430px;
+    width: 100%; max-width: 430px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -1200,13 +1284,7 @@ body {
 }
 
 .action-btn i { font-size: 1.1rem; }
-
-.action-btn:hover,
-.action-btn:active {
-    color: var(--gold);
-    transform: scale(1.1);
-}
-
+.action-btn:hover, .action-btn:active { color: var(--gold); transform: scale(1.1); }
 .heart-btn i { color: #ff4444; }
 
 /* =============================================
@@ -1214,11 +1292,9 @@ body {
    ============================================= */
 .wishes-stream {
     position: fixed;
-    bottom: 65px;
-    left: 50%;
+    bottom: 65px; left: 50%;
     transform: translateX(-50%);
-    width: 100%;
-    max-width: 430px;
+    width: 100%; max-width: 430px;
     max-height: 160px;
     z-index: 999;
     padding: 0 15px;
@@ -1228,20 +1304,15 @@ body {
     overflow: hidden;
 }
 
-.wishes-stream.active {
-    opacity: 1;
-    pointer-events: auto;
-}
+.wishes-stream.active { opacity: 1; pointer-events: auto; }
 
 .close-wishes {
     position: absolute;
-    top: 5px;
-    right: 20px;
+    top: 5px; right: 20px;
     background: rgba(255,255,255,0.2);
     border: none;
     color: white;
-    width: 24px;
-    height: 24px;
+    width: 24px; height: 24px;
     border-radius: 50%;
     cursor: pointer;
     font-size: 0.7rem;
@@ -1271,15 +1342,10 @@ body {
     font-weight: 700;
     font-size: 0.75rem;
     color: var(--gold-light);
-    display: inline;
     margin-right: 6px;
 }
 
-.wish-item .wish-text {
-    font-size: 0.75rem;
-    color: var(--white);
-    display: inline;
-}
+.wish-item .wish-text { font-size: 0.75rem; color: var(--white); }
 
 @keyframes wishSlideIn {
     from { transform: translateX(-50px); opacity: 0; }
@@ -1302,10 +1368,7 @@ body {
     transition: all 0.3s;
 }
 
-.modal.active {
-    opacity: 1;
-    visibility: visible;
-}
+.modal.active { opacity: 1; visibility: visible; }
 
 .modal-overlay {
     position: absolute;
@@ -1318,17 +1381,14 @@ body {
     position: relative;
     background: var(--white);
     border-radius: 20px;
-    width: 90%;
-    max-width: 380px;
+    width: 90%; max-width: 380px;
     overflow: hidden;
     transform: translateY(30px);
     transition: transform 0.3s;
     z-index: 1;
 }
 
-.modal.active .modal-content {
-    transform: translateY(0);
-}
+.modal.active .modal-content { transform: translateY(0); }
 
 .modal-header {
     display: flex;
@@ -1339,14 +1399,10 @@ body {
     color: var(--white);
 }
 
-.modal-header h4 {
-    font-family: var(--font-display);
-    font-size: 1.1rem;
-}
+.modal-header h4 { font-family: var(--font-display); font-size: 1.1rem; }
 
 .close-modal {
-    background: none;
-    border: none;
+    background: none; border: none;
     color: var(--white);
     font-size: 1.1rem;
     cursor: pointer;
@@ -1355,8 +1411,7 @@ body {
 
 .modal-body { padding: 20px; }
 
-.modal-body input,
-.modal-body textarea {
+.modal-body input, .modal-body textarea {
     width: 100%;
     padding: 10px 15px;
     border: 1.5px solid #ddd;
@@ -1367,11 +1422,7 @@ body {
     resize: none;
 }
 
-.modal-body input:focus,
-.modal-body textarea:focus {
-    outline: none;
-    border-color: var(--red-main);
-}
+.modal-body input:focus, .modal-body textarea:focus { outline: none; border-color: var(--red-main); }
 
 .modal-footer { padding: 0 20px 20px; }
 
@@ -1393,18 +1444,12 @@ body {
     transition: all 0.3s;
 }
 
-.submit-wish-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(139, 26, 43, 0.4);
-}
+.submit-wish-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(139, 26, 43, 0.4); }
 
-/* =============================================
-   TOAST
-   ============================================= */
+/* ===== TOAST ===== */
 .toast {
     position: fixed;
-    top: 20px;
-    left: 50%;
+    top: 20px; left: 50%;
     transform: translateX(-50%) translateY(-100px);
     background: var(--white);
     color: var(--text-dark);
@@ -1420,33 +1465,21 @@ body {
 }
 
 .toast.active { transform: translateX(-50%) translateY(0); }
-
 .toast i { color: #4CAF50; font-size: 1.1rem; }
 
 /* ===== UTILITIES ===== */
 .hidden { display: none !important; }
 
-/* Confetti */
-.confetti {
-    position: fixed;
-    top: -10px;
-    z-index: 9;
-    pointer-events: none;
-    animation: confettiFall 4s linear forwards;
-}
-
-@keyframes confettiFall {
-    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-}
-
 /* ===== RESPONSIVE ===== */
 @media (max-width: 380px) {
     .arch-photo { width: 240px; height: 300px; border-radius: 120px 120px 10px 10px; }
-    .arch-frame { width: 240px; }
+    .curved-text-svg { width: 260px; height: 140px; }
     .couple-names-top { font-size: 1.2rem; }
     .xi-3d { font-size: 6rem; }
     .portrait-card img { height: 230px; }
     .countdown-item { min-width: 60px; padding: 10px 14px; }
     .countdown-number { font-size: 1.5rem; }
+    .portrait-name { font-size: 1.3rem; }
+    .arch-photo-large { width: 150px; height: 200px; border-radius: 75px 75px 10px 10px; }
+    .arch-photo-small { width: 100px; height: 140px; }
 }
