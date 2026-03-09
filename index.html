@@ -70,7 +70,7 @@
         }
 
         /* ==========================================
-           INTRO OVERLAY – Envelope / Card split
+           INTRO OVERLAY – Click to open
            ========================================== */
         .intro-overlay {
             position: fixed;
@@ -78,6 +78,10 @@
             width: 100%; height: 100%;
             z-index: 9999;
             display: flex;
+            pointer-events: auto;
+            cursor: pointer;
+        }
+        .intro-overlay.opened {
             pointer-events: none;
         }
         .intro-overlay .panel {
@@ -86,15 +90,13 @@
             overflow: hidden;
         }
         .intro-overlay .panel-left {
-            background: linear-gradient(135deg, #d6e3ef 0%, #eef3f8 100%);
-            transform-origin: left center;
-            animation: panelSlideLeft 1.4s ease-in-out 0.8s forwards;
+            background: linear-gradient(135deg, #c8d8e6 0%, #eef3f8 60%);
         }
         .intro-overlay .panel-right {
-            background: linear-gradient(225deg, #d6e3ef 0%, #eef3f8 100%);
-            transform-origin: right center;
-            animation: panelSlideRight 1.4s ease-in-out 0.8s forwards;
+            background: linear-gradient(225deg, #c8d8e6 0%, #eef3f8 60%);
         }
+
+        /* Viền giữa thiệp */
         .intro-overlay .panel-left::after,
         .intro-overlay .panel-right::after {
             content: '';
@@ -102,43 +104,111 @@
             top: 0;
             width: 2px;
             height: 100%;
-            background: rgba(28,61,90,0.15);
+            background: rgba(28,61,90,0.12);
         }
         .intro-overlay .panel-left::after { right: 0; }
         .intro-overlay .panel-right::after { left: 0; }
 
+        /* Hoa trang trí trên panel */
+        .intro-overlay .panel-left::before {
+            content: '✿';
+            position: absolute;
+            top: 15%; right: 20%;
+            font-size: 2rem;
+            color: rgba(28,61,90,0.08);
+            transform: rotate(-15deg);
+        }
+        .intro-overlay .panel-right::before {
+            content: '✿';
+            position: absolute;
+            bottom: 15%; left: 20%;
+            font-size: 2rem;
+            color: rgba(28,61,90,0.08);
+            transform: rotate(15deg);
+        }
+
+        /* Nội dung giữa */
         .intro-content {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
-            white-space: nowrap;
             z-index: 10000;
-            animation: introFade 0.6s ease-out 0.5s forwards;
-            opacity: 0;
+            animation: introFadeIn 0.8s ease-out forwards;
         }
-        .intro-content p {
-            font-family: 'Great Vibes', cursive;
-            font-size: 2.2rem;
-            color: #1c3d5a;
+        .intro-content .intro-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            animation: floatIcon 2s ease-in-out infinite;
         }
-        .intro-content span {
+        .intro-content .intro-sub {
             font-family: 'Playfair Display', serif;
-            font-size: 0.85rem;
+            font-size: 0.65rem;
             color: #5a7a96;
             letter-spacing: 3px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .intro-content .intro-names {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.7rem;
+            color: #1c3d5a;
+            white-space: nowrap;
+            margin-bottom: 25px;
+        }
+        .intro-content .open-btn {
+            display: inline-block;
+            padding: 10px 30px;
+            border: 2px solid #1c3d5a;
+            color: #1c3d5a;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            background: transparent;
+            transition: all 0.3s;
+            animation: pulseBtn 2s ease-in-out infinite;
+        }
+        .intro-content .open-btn:hover {
+            background: #1c3d5a;
+            color: #fff;
         }
 
-        @keyframes introFade {
-            to { opacity: 1; }
+        /* Khi click -> tách */
+        .intro-overlay.opened .panel-left {
+            animation: panelSlideLeft 1.6s ease-in-out forwards;
+        }
+        .intro-overlay.opened .panel-right {
+            animation: panelSlideRight 1.6s ease-in-out forwards;
+        }
+        .intro-overlay.opened .intro-content {
+            animation: introFadeOut 0.5s ease-out forwards;
+        }
+
+        @keyframes introFadeIn {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+            to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+        @keyframes introFadeOut {
+            to { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
         }
         @keyframes panelSlideLeft {
-            0% { transform: translateX(0); opacity: 1; }
-            100% { transform: translateX(-105%); opacity: 0; }
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-105%); }
         }
         @keyframes panelSlideRight {
-            0% { transform: translateX(0); opacity: 1; }
-            100% { transform: translateX(105%); opacity: 0; }
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(105%); }
+        }
+        @keyframes floatIcon {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        @keyframes pulseBtn {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(28,61,90,0.3); }
+            50% { box-shadow: 0 0 0 10px rgba(28,61,90,0); }
         }
 
         /* ==========================================
@@ -153,31 +223,66 @@
             opacity: 1;
             transform: translateY(0);
         }
-        .d1 { transition-delay: 0.1s; }
-        .d2 { transition-delay: 0.2s; }
-        .d3 { transition-delay: 0.3s; }
-        .d4 { transition-delay: 0.4s; }
+        .d1 { transition-delay: 0.15s; }
+        .d2 { transition-delay: 0.3s; }
+        .d3 { transition-delay: 0.45s; }
+        .d4 { transition-delay: 0.6s; }
+        .d5 { transition-delay: 0.75s; }
+        .d6 { transition-delay: 0.9s; }
 
-        /* Slide from left */
+        /* Slide from left (for photos) */
         .anim-left {
             opacity: 0;
-            transform: translateX(-60px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateX(-70px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
         }
         .anim-left.show {
             opacity: 1;
             transform: translateX(0);
         }
 
-        /* Slide from right */
+        /* Slide from right (for photos) */
         .anim-right {
             opacity: 0;
-            transform: translateX(60px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: translateX(70px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
         }
         .anim-right.show {
             opacity: 1;
             transform: translateX(0);
+        }
+
+        /* Drop from top (for titles like NHÀ TRAI) */
+        .anim-down {
+            opacity: 0;
+            transform: translateY(-30px);
+            transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+        }
+        .anim-down.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Rise from bottom (for parent info) */
+        .anim-up {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+        }
+        .anim-up.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Scale in (for names) */
+        .anim-scale {
+            opacity: 0;
+            transform: scale(0.7);
+            transition: opacity 1s ease-out, transform 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .anim-scale.show {
+            opacity: 1;
+            transform: scale(1);
         }
 
         /* ==========================================
@@ -192,10 +297,15 @@
            ========================================== */
         .hero {
             position: relative;
-            padding: 50px 25px 30px;
+            padding: 20px 20px 15px;
             text-align: center;
             background: linear-gradient(180deg, #f0f4f8 0%, #ffffff 100%);
             overflow: hidden;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .hero-flowers {
@@ -215,25 +325,26 @@
 
         .hero-label {
             font-family: 'Playfair Display', serif;
-            font-size: 1.15rem;
+            font-size: 0.85rem;
             color: #1c3d5a;
             letter-spacing: 4px;
             text-transform: uppercase;
-            margin-bottom: 8px;
+            margin-bottom: 3px;
         }
 
         .hero-names {
             font-family: 'Great Vibes', cursive;
-            font-size: 2.8rem;
+            font-size: 2rem;
             color: #1c3d5a;
             line-height: 1.2;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
+            white-space: nowrap;
         }
 
         .hero-photo-frame {
-            width: 75%;
-            margin: 0 auto 30px;
-            border: 6px solid #dce6ef;
+            width: 50%;
+            margin: 0 auto 15px;
+            border: 4px solid #dce6ef;
             background: #dce6ef;
             overflow: hidden;
         }
@@ -254,7 +365,7 @@
             gap: 0;
             color: #1c3d5a;
             font-family: 'Playfair Display', serif;
-            margin-bottom: 10px;
+            margin-bottom: 6px;
         }
 
         .dt-left {
@@ -726,12 +837,14 @@
     </style>
 </head>
 <body>
-    <!-- INTRO OVERLAY – Tách thiệp -->
+    <!-- INTRO OVERLAY – Click để mở thiệp -->
     <div class="intro-overlay" id="introOverlay">
         <div class="panel panel-left"></div>
-        <div class="intro-content">
-            <span>WE ARE GETTING MARRIED</span>
-            <p>Tuấn Kiệt & Hoàng Nhiên</p>
+        <div class="intro-content" id="introContent">
+            <div class="intro-icon">💌</div>
+            <span class="intro-sub">Wedding Invitation</span>
+            <p class="intro-names">Tuấn Kiệt & Hoàng Nhiên</p>
+            <button class="open-btn" id="openBtn">✦ Mở Thiệp ✦</button>
         </div>
         <div class="panel panel-right"></div>
     </div>
@@ -772,31 +885,31 @@
             </p>
 
             <!-- Nhà Trai -->
-            <div class="parent-card anim-left">
-                <div class="photo">
+            <div class="parent-card">
+                <div class="photo anim-left">
                     <img src="img/anh3.jpg" alt="Chú Rể" loading="lazy">
                 </div>
                 <div class="info">
-                    <h4>NHÀ TRAI</h4>
-                    <p>ÔNG TẠ VĂN THIẾT</p>
-                    <p>BÀ NGUYỄN THỊ HOA</p>
-                    <p class="addr">Xóm 2 Ngọc Phúc, Ngọc Liệp,<br>Quốc Oai, Hà Nội</p>
-                    <p class="role-label">Chú Rể</p>
-                    <p class="person-name script">Tuấn Kiệt</p>
+                    <h4 class="anim-down d1">NHÀ TRAI</h4>
+                    <p class="anim-up d2">ÔNG TẠ VĂN THIẾT</p>
+                    <p class="anim-up d2">BÀ NGUYỄN THỊ HOA</p>
+                    <p class="addr anim-up d3">Xóm 2 Ngọc Phúc, Ngọc Liệp,<br>Quốc Oai, Hà Nội</p>
+                    <p class="role-label anim-up d4">Chú Rể</p>
+                    <p class="person-name script anim-scale d5">Tuấn Kiệt</p>
                 </div>
             </div>
 
             <!-- Nhà Gái -->
-            <div class="parent-card reverse anim-right">
-                <div class="photo">
+            <div class="parent-card reverse">
+                <div class="photo anim-right">
                     <img src="img/anh4.jpg" alt="Cô Dâu" loading="lazy">
                 </div>
                 <div class="info">
-                    <h4>NHÀ GÁI</h4>
-                    <p>BÀ CẤN THỊ NHIỆM</p>
-                    <p class="addr">Đội 5 Đại Đồng, Độ Lân,<br>Tuyết Nghĩa, Quốc Oai, Hà Nội</p>
-                    <p class="role-label">Cô Dâu</p>
-                    <p class="person-name script">Hoàng Nhiên</p>
+                    <h4 class="anim-down d1">NHÀ GÁI</h4>
+                    <p class="anim-up d2">BÀ CẤN THỊ NHIỆM</p>
+                    <p class="addr anim-up d3">Đội 5 Đại Đồng, Độ Lân,<br>Tuyết Nghĩa, Quốc Oai, Hà Nội</p>
+                    <p class="role-label anim-up d4">Cô Dâu</p>
+                    <p class="person-name script anim-scale d5">Hoàng Nhiên</p>
                 </div>
             </div>
         </section>
@@ -891,18 +1004,31 @@
 
     </div>
 
-    <!-- Inline JS – Scroll animation observer + Intro -->
+    <!-- Inline JS – Click to open + Scroll animations -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            // Remove intro overlay after animation completes
             const intro = document.getElementById('introOverlay');
-            if (intro) {
+            const openBtn = document.getElementById('openBtn');
+
+            // Click anywhere on overlay or button to open
+            function openEnvelope() {
+                if (intro.classList.contains('opened')) return;
+                intro.classList.add('opened');
+
+                // Hide overlay after animation completes
                 setTimeout(() => {
                     intro.style.display = 'none';
-                }, 2500);
+                    initScrollAnimations();
+                }, 1800);
             }
 
-            // Scroll animation observer
+            if (openBtn) openBtn.addEventListener('click', openEnvelope);
+            if (intro) intro.addEventListener('click', openEnvelope);
+        });
+
+        function initScrollAnimations() {
+            const allAnimEls = document.querySelectorAll(".anim, .anim-left, .anim-right, .anim-down, .anim-up, .anim-scale");
+
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -910,13 +1036,23 @@
                         observer.unobserve(entry.target);
                     }
                 });
-            }, { threshold: 0.1 });
-
-            // Observe all animation classes
-            document.querySelectorAll(".anim, .anim-left, .anim-right").forEach(el => {
-                observer.observe(el);
+            }, {
+                threshold: 0.15,
+                rootMargin: "0px 0px -25% 0px"
             });
-        });
+
+            allAnimEls.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const viewH = window.innerHeight;
+
+                if (rect.top < viewH * 0.85) {
+                    // In view -> show with slight delay for staggered feel
+                    el.classList.add("show");
+                } else {
+                    observer.observe(el);
+                }
+            });
+        }
     </script>
 </body>
 </html>
