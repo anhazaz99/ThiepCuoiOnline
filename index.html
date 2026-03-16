@@ -764,15 +764,23 @@
 
         .cal-table .wedding-mark {
             position: relative;
-            color: #1c3d5a;
+            color: #fff;
             font-weight: 700;
+            background: #1c3d5a;
+            border-radius: 50%;
+            box-shadow: 0 2px 10px rgba(28,61,90,0.35);
         }
-        .cal-table .wedding-mark::before {
-            content: '♡';
-            position: absolute;
-            top: -2px; right: -2px;
-            font-size: 0.6rem;
-            color: #aaa;
+        .cal-table .wedding-mark::after {
+            content: '❤';
+            display: block;
+            font-size: 0.5rem;
+            line-height: 1;
+            margin-top: -4px;
+            animation: heartPulse 1.5s ease-in-out infinite;
+        }
+        @keyframes heartPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.4); }
         }
 
         .heart-divider {
@@ -985,15 +993,15 @@
                 <div class="hero-date-row anim d3">
                     <div class="dt-left">
                         <div class="time">16:00</div>
-                        <div class="day">Chủ Nhật & Thứ 2</div>
+                        <div class="day">Thứ Sáu & Thứ Bảy</div>
                     </div>
-                    <div class="dt-center">16&17.02</div>
+                    <div class="dt-center">03&04.04</div>
                     <div class="dt-right">
                         <span>20</span>
-                        <span>25</span>
+                        <span>26</span>
                     </div>
                 </div>
-                <p class="hero-lunar anim d4">(Nhằm Ngày 19 & 20 Tháng 01 Năm Ất Tỵ)</p>
+                <p class="hero-lunar anim d4">(Nhằm Ngày 16 & 17 Tháng 02 Năm Bính Ngọ)</p>
             </div>
         </section>
 
@@ -1056,18 +1064,18 @@
 
             <div class="event-box anim d3" id="event-trai">
                 <h3>LỄ THÀNH HÔN</h3>
-                <p class="ev-time">CHỦ NHẬT & THỨ 2 | 16H00</p>
-                <p class="ev-date">16 & 17 . 02 . 2025</p>
-                <p class="ev-lunar">(Tức Ngày 19 & 20 Tháng 01 Năm Ất Tỵ)</p>
+                <p class="ev-time">THỨ SÁU & THỨ BẢY | 16H00</p>
+                <p class="ev-date">03 & 04 . 04 . 2026</p>
+                <p class="ev-lunar">(Tức Ngày 16 & 17 Tháng 02 Năm Bính Ngọ)</p>
                 <p style="font-size:0.82rem; margin-top:10px; color:#2d5070;">📍 Thôn 2 Hương Ngải, Xã Tây Phương, TP Hà Nội</p>
                 <button class="btn-rsvp" style="margin-top:15px" onclick="document.getElementById('rsvpSection').scrollIntoView({behavior:'smooth'})">XÁC NHẬN THAM DỰ</button>
             </div>
 
             <div class="event-box" id="event-gai" style="display:none;">
                 <h3>LỄ VU QUY</h3>
-                <p class="ev-time">CHỦ NHẬT & THỨ 2 | 16H00</p>
-                <p class="ev-date">16 & 17 . 02 . 2025</p>
-                <p class="ev-lunar">(Tức Ngày 19 & 20 Tháng 01 Năm Ất Tỵ)</p>
+                <p class="ev-time">THỨ SÁU & THỨ BẢY | 16H00</p>
+                <p class="ev-date">03 & 04 . 04 . 2026</p>
+                <p class="ev-lunar">(Tức Ngày 16 & 17 Tháng 02 Năm Bính Ngọ)</p>
                 <p style="font-size:0.82rem; margin-top:10px; color:#2d5070;">📍 Bình Xá, Xã Tây Phương, TP Hà Nội</p>
                 <button class="btn-rsvp" style="margin-top:15px" onclick="document.getElementById('rsvpSection').scrollIntoView({behavior:'smooth'})">XÁC NHẬN THAM DỰ</button>
             </div>
@@ -1077,7 +1085,7 @@
         <section class="calendar-section">
             <div class="cal-title anim">
                 SAVE THE DATE
-                <span>THÁNG 2 - 2025</span>
+                <span>THÁNG 4 - 2026</span>
             </div>
 
             <table class="cal-table anim d1">
@@ -1085,11 +1093,11 @@
                     <tr><th>T2</th><th>T3</th><th>T4</th><th>T5</th><th>T6</th><th>T7</th><th>CN</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td></td><td></td><td></td><td></td><td></td><td>1</td><td class="sunday">2</td></tr>
-                    <tr><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td class="sunday">9</td></tr>
-                    <tr><td>10</td><td>11</td><td>12</td><td>13</td><td>14</td><td>15</td><td class="sunday wedding-mark">16</td></tr>
-                    <tr><td class="wedding-mark">17</td><td>18</td><td>19</td><td>20</td><td>21</td><td>22</td><td class="sunday">23</td></tr>
-                    <tr><td>24</td><td>25</td><td>26</td><td>27</td><td>28</td><td></td><td></td></tr>
+                    <tr><td></td><td></td><td>1</td><td>2</td><td class="wedding-mark">3</td><td class="wedding-mark">4</td><td class="sunday">5</td></tr>
+                    <tr><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td class="sunday">12</td></tr>
+                    <tr><td>13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td class="sunday">19</td></tr>
+                    <tr><td>20</td><td>21</td><td>22</td><td>23</td><td>24</td><td>25</td><td class="sunday">26</td></tr>
+                    <tr><td>27</td><td>28</td><td>29</td><td>30</td><td></td><td></td><td></td></tr>
                 </tbody>
             </table>
 
