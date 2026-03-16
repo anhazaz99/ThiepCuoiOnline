@@ -962,9 +962,60 @@
             .dt-center { font-size: 1.6rem; }
             .parent-card .info .person-name { font-size: 1.8rem; }
         }
+
+        /* ==========================================
+           MUSIC TOGGLE BUTTON
+           ========================================== */
+        .music-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #1c3d5a;
+            border: 2px solid rgba(255,255,255,0.3);
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 9998;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(28,61,90,0.4);
+            transition: all 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .music-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .music-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(28,61,90,0.5);
+        }
+        .music-btn.playing .music-icon {
+            animation: musicSpin 2s linear infinite;
+        }
+        .music-btn.muted {
+            background: rgba(28,61,90,0.5);
+        }
+        @keyframes musicSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
+    <!-- BACKGROUND MUSIC -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="audio/Duc.Phuc-Hon.Ca.Yeu.mp3" type="audio/mpeg">
+    </audio>
+    <button class="music-btn" id="musicBtn" title="Bật/Tắt nhạc">
+        <span class="music-icon">🎵</span>
+    </button>
+
     <!-- INTRO OVERLAY – Click để mở thiệp -->
     <div class="intro-overlay" id="introOverlay">
         <div class="panel panel-left"></div>
@@ -992,7 +1043,7 @@
 
                 <div class="hero-date-row anim d3">
                     <div class="dt-left">
-                        <div class="time">16:00</div>
+                        <div class="time">14h & 12h</div>
                         <div class="day">Thứ Sáu & Thứ Bảy</div>
                     </div>
                     <div class="dt-center">03&04.04</div>
@@ -1064,19 +1115,33 @@
 
             <div class="event-box anim d3" id="event-trai">
                 <h3>LỄ THÀNH HÔN</h3>
-                <p class="ev-time">THỨ SÁU & THỨ BẢY | 16H00</p>
                 <p class="ev-date">03 & 04 . 04 . 2026</p>
                 <p class="ev-lunar">(Tức Ngày 16 & 17 Tháng 02 Năm Bính Ngọ)</p>
-                <p style="font-size:0.82rem; margin-top:10px; color:#2d5070;">📍 Thôn 2 Hương Ngải, Xã Tây Phương, TP Hà Nội</p>
+                <div style="margin:15px 0; border-top:1px solid rgba(28,61,90,0.15); padding-top:15px;">
+                    <p style="font-size:0.88rem; font-weight:600; margin-bottom:5px;">🍽 Thứ Sáu, 03/04 – 16H00</p>
+                    <p style="font-size:0.82rem; color:#456; font-style:italic;">Bữa cơm thân mật</p>
+                </div>
+                <div style="margin-bottom:15px; border-top:1px solid rgba(28,61,90,0.15); padding-top:15px;">
+                    <p style="font-size:0.88rem; font-weight:600; margin-bottom:5px;">💒 Thứ Bảy, 04/04 – 12H00</p>
+                    <p style="font-size:0.82rem; color:#456; font-style:italic;">Lễ đón dâu</p>
+                </div>
+                <p style="font-size:0.82rem; color:#2d5070;">📍 Thôn 2 Hương Ngải, Xã Tây Phương, TP Hà Nội</p>
                 <button class="btn-rsvp" style="margin-top:15px" onclick="document.getElementById('rsvpSection').scrollIntoView({behavior:'smooth'})">XÁC NHẬN THAM DỰ</button>
             </div>
 
             <div class="event-box" id="event-gai" style="display:none;">
                 <h3>LỄ VU QUY</h3>
-                <p class="ev-time">THỨ SÁU & THỨ BẢY | 16H00</p>
                 <p class="ev-date">03 & 04 . 04 . 2026</p>
                 <p class="ev-lunar">(Tức Ngày 16 & 17 Tháng 02 Năm Bính Ngọ)</p>
-                <p style="font-size:0.82rem; margin-top:10px; color:#2d5070;">📍 Bình Xá, Xã Tây Phương, TP Hà Nội</p>
+                <div style="margin:15px 0; border-top:1px solid rgba(28,61,90,0.15); padding-top:15px;">
+                    <p style="font-size:0.88rem; font-weight:600; margin-bottom:5px;">🍽 Thứ Sáu, 03/04 – 14H00</p>
+                    <p style="font-size:0.82rem; color:#456; font-style:italic;">Bữa cơm thân mật</p>
+                </div>
+                <div style="margin-bottom:15px; border-top:1px solid rgba(28,61,90,0.15); padding-top:15px;">
+                    <p style="font-size:0.88rem; font-weight:600; margin-bottom:5px;">💒 Thứ Bảy, 04/04 – 12H00</p>
+                    <p style="font-size:0.82rem; color:#456; font-style:italic;">Lễ Vu Quy</p>
+                </div>
+                <p style="font-size:0.82rem; color:#2d5070;">📍 Bình Xá, Xã Tây Phương, TP Hà Nội</p>
                 <button class="btn-rsvp" style="margin-top:15px" onclick="document.getElementById('rsvpSection').scrollIntoView({behavior:'smooth'})">XÁC NHẬN THAM DỰ</button>
             </div>
         </section>
@@ -1217,6 +1282,18 @@
                 if (intro.classList.contains('opened')) return;
                 intro.classList.add('opened');
 
+                // Play background music
+                const bgMusic = document.getElementById('bgMusic');
+                const musicBtn = document.getElementById('musicBtn');
+                if (bgMusic) {
+                    bgMusic.volume = 0.5;
+                    bgMusic.play().then(() => {
+                        musicBtn.classList.add('visible', 'playing');
+                    }).catch(() => {
+                        musicBtn.classList.add('visible', 'muted');
+                    });
+                }
+
                 // Hide overlay after animation completes
                 setTimeout(() => {
                     intro.style.display = 'none';
@@ -1226,6 +1303,23 @@
 
             if (openBtn) openBtn.addEventListener('click', openEnvelope);
             if (intro) intro.addEventListener('click', openEnvelope);
+
+            // Music toggle
+            const musicBtn = document.getElementById('musicBtn');
+            const bgMusic = document.getElementById('bgMusic');
+            if (musicBtn && bgMusic) {
+                musicBtn.addEventListener('click', () => {
+                    if (bgMusic.paused) {
+                        bgMusic.play();
+                        musicBtn.classList.remove('muted');
+                        musicBtn.classList.add('playing');
+                    } else {
+                        bgMusic.pause();
+                        musicBtn.classList.remove('playing');
+                        musicBtn.classList.add('muted');
+                    }
+                });
+            }
         });
 
         // Tab switching function
