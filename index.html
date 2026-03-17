@@ -961,6 +961,38 @@
             .hero-names { font-size: 2.4rem; }
             .dt-center { font-size: 1.6rem; }
             .parent-card .info .person-name { font-size: 1.8rem; }
+
+            /* Prevent parent name text wrapping on mobile */
+            .parent-card .info p {
+                font-size: 0.78rem;
+                white-space: nowrap;
+            }
+            .parent-card .info h4 {
+                font-size: 0.85rem;
+            }
+            .parent-card .info .addr {
+                font-size: 0.72rem;
+                white-space: normal;
+            }
+            .parent-card .info .role-label {
+                font-size: 0.82rem;
+                margin-top: 10px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .parent-card .photo {
+                flex: 0 0 40%;
+            }
+            .parent-card .info p {
+                font-size: 0.72rem;
+            }
+            .parent-card .info h4 {
+                font-size: 0.8rem;
+            }
+            .parent-card .info .person-name {
+                font-size: 1.6rem;
+            }
         }
 
         /* ==========================================
